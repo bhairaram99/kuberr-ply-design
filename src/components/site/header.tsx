@@ -75,7 +75,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 48);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -84,8 +84,10 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b border-transparent bg-background/80 backdrop-blur-xl transition-all",
-        scrolled && "border-border shadow-sm",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300",
+        scrolled
+          ? "bg-background/90 shadow-[0_10px_30px_-20px_rgba(26,30,39,0.4)] backdrop-blur-xl"
+          : "bg-transparent",
       )}
     >
       <Container className={cn("flex items-center justify-between gap-4 transition-all", scrolled ? "h-[4.5rem]" : "h-24")}>
