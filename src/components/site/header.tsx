@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, Menu, MessageCircle } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "./primitives";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import { productCategories } from "@/data/products";
 import { solutions } from "@/data/solutions";
-import { whatsappUrl } from "./contact-actions";
+import { CallButton, WhatsAppButton } from "./contact-actions";
 import { cn } from "@/lib/utils";
 
 function MenuGroup({
@@ -84,15 +84,15 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b border-transparent bg-background/95 backdrop-blur transition-all",
+        "fixed inset-x-0 top-0 z-50 border-b border-transparent bg-background/80 backdrop-blur-xl transition-all",
         scrolled && "border-border shadow-sm",
       )}
     >
-      <Container className={cn("flex items-center justify-between gap-4 transition-all", scrolled ? "h-16" : "h-20")}>
-        <Link to="/" aria-label="KUBERR PLYWOOD home" className="min-w-0">
+      <Container className={cn("flex items-center justify-between gap-4 transition-all", scrolled ? "h-[4.5rem]" : "h-24")}>
+        <Link to="/" aria-label="KUBER PLYWOOD home" className="min-w-0">
           <Brand />
         </Link>
-        <nav aria-label="Primary navigation" className="hidden items-center gap-6 lg:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-5 xl:gap-6 lg:flex">
           <Link
             to="/"
             activeOptions={{ exact: true }}
@@ -124,16 +124,9 @@ export function Header() {
           >
             Contact
           </Link>
-          <Button asChild>
+          <Button asChild className="rounded-full bg-ink px-5 text-background hover:bg-ink/90 hover:text-background">
             <Link to="/quote">Get a Quote</Link>
           </Button>
-          {whatsappUrl ? (
-            <Button asChild variant="ghost" size="icon" aria-label="WhatsApp KUBERR PLYWOOD">
-              <a href={whatsappUrl} target="_blank" rel="noreferrer">
-                <MessageCircle />
-              </a>
-            </Button>
-          ) : null}
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -161,11 +154,15 @@ export function Header() {
               ))}
               <MobileLink to="/bulk-orders" label="Bulk Orders" />
               <MobileLink to="/contact" label="Contact" />
-              <SheetClose asChild>
-                <Button asChild className="mt-6">
-                  <Link to="/quote">Get a Quote</Link>
-                </Button>
-              </SheetClose>
+              <div className="mt-6 flex flex-col gap-3">
+                <CallButton />
+                <WhatsAppButton />
+                <SheetClose asChild>
+                  <Button asChild className="rounded-full">
+                    <Link to="/quote">Get a Quote</Link>
+                  </Button>
+                </SheetClose>
+              </div>
             </nav>
           </SheetContent>
         </Sheet>

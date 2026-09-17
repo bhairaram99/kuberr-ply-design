@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import showroomImage from "@/assets/showroom.jpg";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { CallButton, QuoteButton, WhatsAppButton } from "./contact-actions";
 
 export function Container({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn("mx-auto w-full max-w-[1380px] px-5 sm:px-8 lg:px-12", className)}>{children}</div>;
@@ -71,25 +72,42 @@ export function Breadcrumbs({ items }: { items: { label: string; to?: string }[]
 }
 
 export function CtaBand({
-  title = "Ready to plan your requirement?",
-  copy = "Tell us what you need. Our team will help you identify suitable materials for your project.",
+  title,
+  copy = "Whether the requirement is a single furniture piece or a complete interior project, the team is ready to help you choose suitable materials.",
 }: {
   title?: string;
   copy?: string;
 }) {
   return (
-    <section className="bg-surface-strong py-16 text-background sm:py-20">
-      <Container className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
-        <div>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-secondary">Start a conversation</p>
-          <h2 className="text-3xl font-bold sm:text-4xl">{title}</h2>
-          <p className="mt-4 max-w-2xl text-background/70">{copy}</p>
+    <section className="bg-background py-10 sm:py-16">
+      <Container>
+        <div className="overflow-hidden rounded-[2rem] bg-ink text-background shadow-[0_30px_80px_-48px_rgba(26,30,39,0.7)] lg:grid lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">Let’s talk</p>
+            <h2 className="mt-4 max-w-xl text-3xl font-extrabold leading-[1.08] sm:text-5xl">
+              {title ?? (
+                <>
+                  Let’s start creating
+                  <span className="block font-serif italic font-normal">together.</span>
+                </>
+              )}
+            </h2>
+            <p className="mt-5 max-w-md text-sm leading-7 text-background/70">{copy}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <QuoteButton label="Request a Quote" />
+              <CallButton variant="light" />
+              <WhatsAppButton variant="light" />
+            </div>
+          </div>
+          <div className="relative min-h-[240px] overflow-hidden">
+            <img
+              src={showroomImage}
+              alt="KUBER PLYWOOD showroom with laminates, hardware, doors and material samples"
+              className="h-full w-full object-cover transition-transform duration-[4000ms] hover:scale-105"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-l from-transparent to-ink/20" />
+          </div>
         </div>
-        <Button asChild variant="light" size="lg">
-          <Link to="/quote">
-            Request a Quote <ArrowRight />
-          </Link>
-        </Button>
       </Container>
     </section>
   );
@@ -163,7 +181,7 @@ export function Reveal({
   return (
     <div
       ref={ref}
-      className={cn(visible ? "animate-rise" : "opacity-0", className)}
+      className={cn(visible ? "animate-rise" : "translate-y-6", className)}
       style={delay ? { animationDelay: `${delay}ms` } : undefined}
     >
       {children}

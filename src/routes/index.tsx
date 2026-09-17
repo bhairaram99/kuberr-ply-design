@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { HeroSection } from "@/components/home/hero";
+import { HeroSection, ManifestoSection } from "@/components/home/hero";
 import {
   AudienceSection,
   BulkSection,
   CategorySection,
-  FeaturedSection,
   ShowroomSection,
   SolutionSelector,
   WhyChooseSection,
@@ -27,11 +26,11 @@ function Index() {
   return (
     <>
       <HeroSection />
+      <ManifestoSection />
       <CategorySection />
       <WhyChooseSection />
       <AudienceSection />
       <SolutionSelector />
-      <FeaturedSection />
       <BulkSection />
       <ShowroomSection />
       <CtaBand />

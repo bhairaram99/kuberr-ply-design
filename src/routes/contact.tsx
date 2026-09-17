@@ -30,7 +30,7 @@ function ContactPage() {
           <div>
             <h2 className="text-2xl font-bold text-ink">Get in touch</h2>
             <p className="mt-4 text-sm leading-6 text-muted-foreground">
-              Use the actions below when contact details are published, or send an enquiry through the form.
+              Call, WhatsApp or send an enquiry through the form. The team will help you find the right products for your project.
             </p>
             <div className="mt-8 flex flex-col gap-3">
               <CallButton />

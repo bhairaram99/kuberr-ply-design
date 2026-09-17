@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import bulkImage from "@/assets/bulk-project.jpg";
 import { pageHead } from "@/lib/seo";
 import { CtaBand, Container, MediaFrame, PageIntro } from "@/components/site/primitives";
-import { QuoteButton, WhatsAppButton } from "@/components/site/contact-actions";
+import { CallButton, QuoteButton, WhatsAppButton } from "@/components/site/contact-actions";
 
 export const Route = createFileRoute("/bulk-orders")({
   head: () =>
@@ -28,9 +28,9 @@ function BulkOrdersPage() {
           <MediaFrame src={bulkImage} alt="Commercial interior project with coordinated wood materials ready for bulk supply" className="aspect-[4/3]" />
           <div>
             <h2 className="text-2xl font-bold text-ink">Useful for</h2>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-6 flex flex-wrap gap-3">
               {["Contractors", "Builders", "Interior Designers", "Furniture Manufacturers", "Businesses"].map((item) => (
-                <li key={item} className="border border-border px-4 py-3 text-sm font-semibold">
+                <li key={item} className="rounded-full border border-border bg-white/60 px-4 py-2.5 text-sm font-semibold">
                   {item}
                 </li>
               ))}
@@ -45,8 +45,9 @@ function BulkOrdersPage() {
                 ),
               )}
             </ul>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <QuoteButton label="Request a Quote" />
+              <CallButton />
               <WhatsAppButton />
             </div>
           </div>
