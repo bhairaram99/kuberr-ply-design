@@ -4,12 +4,12 @@ export const company = {
   positioning: "Complete Interior & Furniture Material Solutions",
   description: "KUBERR PLYWOOD is a one-stop destination for plywood, laminates, hardware, flush doors, furniture materials and interior products.",
   contact: {
-    phone: import.meta.env.VITE_PHONE_NUMBER ?? "",
-    whatsapp: import.meta.env.VITE_WHATSAPP_NUMBER ?? "",
-    email: import.meta.env.VITE_EMAIL ?? "",
-    address: import.meta.env.VITE_SHOWROOM_ADDRESS ?? "",
-    openingHours: import.meta.env.VITE_OPENING_HOURS ?? "",
-    mapsUrl: import.meta.env.VITE_GOOGLE_MAPS_URL ?? "",
+    phone: import.meta.env["VITE_PHONE_NUMBER"] ?? "",
+    whatsapp: import.meta.env["VITE_WHATSAPP_NUMBER"] ?? "",
+    email: import.meta.env["VITE_EMAIL"] ?? "",
+    address: import.meta.env["VITE_SHOWROOM_ADDRESS"] ?? "",
+    openingHours: import.meta.env["VITE_OPENING_HOURS"] ?? "",
+    mapsUrl: import.meta.env["VITE_GOOGLE_MAPS_URL"] ?? "",
   },
 } as const;
 

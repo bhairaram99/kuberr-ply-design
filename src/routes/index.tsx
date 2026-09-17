@@ -1,24 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { HeroSection } from "@/components/home/hero";
+import {
+  AudienceSection,
+  BulkSection,
+  CategorySection,
+  FeaturedSection,
+  ShowroomSection,
+  SolutionSelector,
+  WhyChooseSection,
+} from "@/components/home/sections";
+import { CtaBand } from "@/components/site/primitives";
+import { pageHead } from "@/lib/seo";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () =>
+    pageHead({
+      title: "KUBERR PLYWOOD | Plywood, Laminates, Hardware & Interior Materials",
+      description:
+        "KUBERR PLYWOOD provides plywood, laminates, hardware, flush doors, furniture materials and interior products for homeowners, carpenters, designers, contractors, builders and businesses.",
+      path: "/",
+    }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <HeroSection />
+      <CategorySection />
+      <WhyChooseSection />
+      <AudienceSection />
+      <SolutionSelector />
+      <FeaturedSection />
+      <BulkSection />
+      <ShowroomSection />
+      <CtaBand />
+    </>
   );
 }
