@@ -1,27 +1,118 @@
+import type { ComponentProps } from "react";
 import { Link } from "@tanstack/react-router";
-import { MapPin, MessageCircle, Phone } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import { company } from "@/data/company";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const message = encodeURIComponent("Hello KUBERR PLYWOOD, I would like to enquire about your products.");
-export const whatsappUrl = company.contact.whatsapp ? `https://wa.me/${company.contact.whatsapp.replace(/\D/g, "")}?text=${message}` : "";
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={cn("size-5 fill-current", className)}>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
 
-export function WhatsAppButton({ label = "WhatsApp Us", variant = "outline" as const }) {
-  if (!whatsappUrl) return <Button variant={variant} disabled title="WhatsApp number will be added soon"><MessageCircle />{label}</Button>;
-  return <Button asChild variant={variant}><a href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle />{label}</a></Button>;
-}
-export function CallButton() {
-  if (!company.contact.phone) return <Button variant="outline" disabled title="Phone number will be added soon"><Phone />Call Us</Button>;
-  return <Button asChild variant="outline"><a href={`tel:${company.contact.phone}`}><Phone />Call Us</a></Button>;
-}
-export function DirectionsButton() {
-  if (!company.contact.mapsUrl) return <Button variant="outline" disabled title="Showroom location will be added soon"><MapPin />Get Directions</Button>;
-  return <Button asChild variant="outline"><a href={company.contact.mapsUrl} target="_blank" rel="noreferrer"><MapPin />Get Directions</a></Button>;
-}
-export function FloatingWhatsApp() {
+const message = encodeURIComponent("Hello KUBER PLYWOOD, I would like to enquire about your products.");
+const phoneDigits = company.contact.phone.replace(/\D/g, "");
+export const callUrl = phoneDigits ? `tel:+${phoneDigits}` : "";
+export const whatsappUrl = company.contact.whatsapp
+  ? `https://wa.me/${company.contact.whatsapp.replace(/\D/g, "")}?text=${message}`
+  : "";
+
+type ActionVariant = NonNullable<ComponentProps<typeof Button>["variant"]>;
+
+export function WhatsAppButton({
+  label = "WhatsApp Us",
+  variant = "outline",
+  className,
+}: {
+  label?: string;
+  variant?: ActionVariant;
+  className?: string;
+}) {
   if (!whatsappUrl) return null;
-  return <a aria-label="WhatsApp KUBERR PLYWOOD" href={whatsappUrl} target="_blank" rel="noreferrer" className="fixed bottom-5 right-5 z-40 grid size-12 place-items-center rounded-full bg-ink text-background shadow-xl transition-transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><MessageCircle className="size-5" /></a>;
+  return (
+    <Button asChild variant={variant} className={cn("rounded-full", className)}>
+      <a href={whatsappUrl} target="_blank" rel="noreferrer">
+        <WhatsAppIcon />
+        {label}
+      </a>
+    </Button>
+  );
 }
-export function QuoteButton({ label = "Get a Quote", variant = "default" as const }) {
-  return <Button asChild variant={variant}><Link to="/quote">{label}</Link></Button>;
+
+export function CallButton({
+  label = "Call Us",
+  variant = "outline",
+  className,
+}: {
+  label?: string;
+  variant?: ActionVariant;
+  className?: string;
+}) {
+  if (!callUrl) return null;
+  return (
+    <Button asChild variant={variant} className={cn("rounded-full", className)}>
+      <a href={callUrl}>
+        <Phone />
+        {label}
+      </a>
+    </Button>
+  );
+}
+
+export function DirectionsButton() {
+  if (!company.contact.mapsUrl) return null;
+  return (
+    <Button asChild variant="outline" className="rounded-full">
+      <a href={company.contact.mapsUrl} target="_blank" rel="noreferrer">
+        <MapPin />
+        Get Directions
+      </a>
+    </Button>
+  );
+}
+
+export function FloatingContact() {
+  return (
+    <div className="fixed bottom-5 right-5 z-40 flex flex-col gap-3">
+      {callUrl ? (
+        <a
+          aria-label="Call KUBER PLYWOOD"
+          href={callUrl}
+          className="grid size-[3.35rem] place-items-center rounded-full bg-primary text-primary-foreground shadow-[0_10px_24px_-8px_rgba(196,30,30,0.7)] transition-transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <Phone className="size-6" />
+        </a>
+      ) : null}
+      {whatsappUrl ? (
+        <a
+          aria-label="WhatsApp KUBER PLYWOOD"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="float-pulse grid size-[3.35rem] place-items-center rounded-full bg-[#25D366] text-white shadow-[0_10px_24px_-8px_rgba(37,211,102,0.7)] transition-transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <WhatsAppIcon className="size-7" />
+        </a>
+      ) : null}
+    </div>
+  );
+}
+
+export function QuoteButton({
+  label = "Get a Quote",
+  variant = "default",
+  className,
+}: {
+  label?: string;
+  variant?: ActionVariant;
+  className?: string;
+}) {
+  return (
+    <Button asChild variant={variant} className={cn("rounded-full", className)}>
+      <Link to="/quote">{label}</Link>
+    </Button>
+  );
 }
